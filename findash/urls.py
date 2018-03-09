@@ -15,9 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from findash.views import current_datetime
+from findash.views import current_datetime, hours_ahead
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('time/', current_datetime),
+    path('time/plus/<int:offset>', hours_ahead)
 ]

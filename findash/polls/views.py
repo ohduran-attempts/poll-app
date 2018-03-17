@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 from django.http import HttpResponse, Http404
@@ -11,14 +11,12 @@ def index(request):
     context = {
         'latest_question_list':latest_question_list,
     }
-
+    # render instead of HttpResponse for a more simple function
     return render(request, 'polls/index.html',context)
 
 def detail(request, question_id):
-    try:
-        question = Question.objects.get(pk=question_id)
-    except Question.DoesNotExist:
-        raise Http404("Question does not exist")
+    # try question or raise a 404, decoupling even more model from view.
+    question = get_object_or_404(Question, pk=question_id)
     return render(request, 'poll/detail.html',{'question':question})
 
 def results(request, question_id):

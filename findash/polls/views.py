@@ -31,7 +31,8 @@ class DetailView(generic.DetailView):
     model = Question
     template_name = 'polls/detail.html'  # overwrite the default template
     # expects primary key to be called 'pk', thus the view.py reflects that.
-    def_get_queryset(self):
+
+    def get_queryset(self):
         """Exclude questions in the future."""
         return Question.objects.filter(pub_date__lte=timezone.now())
 
